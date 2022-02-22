@@ -3,3 +3,8 @@ export interface Todo {
     todo: string;
     checked: boolean;
 }
+
+export interface TodoContainer {
+    backgroundColor: string;
+    backgroundImage: string;
+}

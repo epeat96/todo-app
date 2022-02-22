@@ -1,5 +1,14 @@
-import { Component, HostListener } from '@angular/core';
-import { Todo } from './interface';
+import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
+import { Todo, TodoContainer } from './interface';
+
+const DARK_BACKGROUND_COLOR: string = '#181824';
+const CLEAR_BACKGROUND_COLOR: string = '#FAFAFA';
+const DARK_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-dark.jpg';
+const CLEAR_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-light.jpg';
+const DARK = true;
+const CLEAR = false;
+const DESKTOP = true;
+const MOBILE = false;
 
 @Component({
   selector: 'app-root',
@@ -8,21 +17,25 @@ import { Todo } from './interface';
 })
 export class AppComponent {
   title = 'todo-app';
-
   todoList: Todo[] = [];
+  deviceType: Boolean = DESKTOP;
+  colorScheme: Boolean = DARK;
 
-  mobile: Boolean = false;
+  todoContainer: TodoContainer = {
+    backgroundColor: DARK_BACKGROUND_COLOR,
+    backgroundImage: DARK_BACKGROUND_DESKTOP_IMAGE
+  }
 
   public innerWidth: any;
   public innerHeight: any;
-
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.innerHeight;
 
-    if (this.innerHeight >= this.innerWidth){
-      this.mobile = true;
+    if (this.innerHeight >= this.innerWidth) {
+      this.deviceType = true;
     }
+
   }
 
   setCheck(event: any) {
@@ -55,13 +68,38 @@ export class AppComponent {
     this.innerWidth = window.innerWidth;
     this.innerHeight = window.innerHeight;
 
-    if (this.innerHeight >= this.innerWidth){
-      this.mobile = true;
+    if (this.innerHeight >= this.innerWidth) {
+      this.deviceType = true;
       return
     }
 
-    this.mobile = false;
-    
+    this.deviceType = false;
+
+  }
+
+  changeColorScheme() {
+    this.changeBackgroundColor();
+    this.changeBackgroundImage();
+  }
+
+  changeBackgroundColor() {
+
+    if (this.todoContainer.backgroundColor !== CLEAR_BACKGROUND_COLOR) {
+      this.todoContainer.backgroundColor = CLEAR_BACKGROUND_COLOR;
+      return
+    }
+    this.todoContainer.backgroundColor = DARK_BACKGROUND_COLOR;
+  }
+
+  changeBackgroundImage() {
+
+    if (this.todoContainer.backgroundImage !== CLEAR_BACKGROUND_DESKTOP_IMAGE && this.deviceType === DESKTOP) {
+      this.todoContainer.backgroundImage = CLEAR_BACKGROUND_DESKTOP_IMAGE;
+      return;
+    } else {
+      this.todoContainer.backgroundImage = DARK_BACKGROUND_DESKTOP_IMAGE;
+    }
+
   }
 
 }

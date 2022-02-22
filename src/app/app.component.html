@@ -1,16 +1,19 @@
-<h1>TODO</h1>
+<div class="todoContainer" [style.background-color]="todoContainer.backgroundColor" [ngStyle]="{ 'background-image': 'url(' + todoContainer.backgroundImage + ')'}">
 
-<input type="text" (keyup)="keyFunc($event)">
+    <h1 (click)="changeColorScheme()">TODO</h1>
 
-<div *ngFor="let element of todoList">
-    <mat-checkbox id="{{element.id}}" color="primary" (change)="setCheck($event)" [checked]="element.checked">{{element.todo}}</mat-checkbox>
+    <input type="text" (keyup)="keyFunc($event)">
+
+    <div *ngFor="let element of todoList">
+        <mat-checkbox id="{{element.id}}" color="primary" (change)="setCheck($event)" [checked]="element.checked">{{element.todo}}</mat-checkbox>
+    </div>
+
+    <p>{{this.countNotChecked()}} items left</p>
+
+    <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW">Frontend Mentor</a>. Coded by <a href="https://github.com/epeat96">Epeat</a>.
+    </div>
+
+    <p>This is the resolution: {{this.innerWidth}} x {{this.innerHeight}}</p>
+    <p>The resolution mobile: {{this.deviceType}}</p>
 </div>
-
-<p>{{this.countNotChecked()}} items left</p>
-
-<div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW">Frontend Mentor</a>. Coded by <a href="https://github.com/epeat96">Epeat</a>.
-</div>
-
-<p>This is the resolution: {{this.innerWidth}} x {{this.innerHeight}}</p>
-<p>The resolution mobile: {{this.mobile}}</p>
