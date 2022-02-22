@@ -1,28 +1,42 @@
 import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
-import { Todo, TodoContainer } from './interface';
+import { CheckBox, Todo, TodoContainer } from './interface';
 
 const DARK_BACKGROUND_COLOR: string = '#181824';
 const CLEAR_BACKGROUND_COLOR: string = '#FAFAFA';
 const DARK_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-dark.jpg';
 const CLEAR_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-light.jpg';
-const DARK = true;
-const CLEAR = false;
-const DESKTOP = true;
-const MOBILE = false;
+const DARK_CHECKBOX_BACKGROUND_COLOR: string = '#25273C';
+const CLEAR_CHECKBOX_BACKGROUND_COLOR: string = '#FFFFFF';
+
+const DARK: boolean = true;
+const CLEAR: boolean = false;
+const DESKTOP: boolean = true;
+const MOBILE: boolean = false;
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+
+  constructor(private elementRef: ElementRef) { }
+
+  ngAfterViewInit() {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = DARK_BACKGROUND_COLOR;
+  }
+
   title = 'todo-app';
   todoList: Todo[] = [];
-  deviceType: Boolean = DESKTOP;
-  colorScheme: Boolean = DARK;
+  deviceType: boolean = DESKTOP;
+  colorScheme: boolean = DARK;
+
+  checkbox: CheckBox = {
+    backgroundColor: DARK_CHECKBOX_BACKGROUND_COLOR
+  }
 
   todoContainer: TodoContainer = {
-    backgroundColor: DARK_BACKGROUND_COLOR,
     backgroundImage: DARK_BACKGROUND_DESKTOP_IMAGE
   }
 
@@ -33,7 +47,9 @@ export class AppComponent {
     this.innerHeight = window.innerHeight;
 
     if (this.innerHeight >= this.innerWidth) {
-      this.deviceType = true;
+      this.deviceType = MOBILE;
+    } else {
+      this.deviceType = DESKTOP
     }
 
   }
@@ -69,31 +85,44 @@ export class AppComponent {
     this.innerHeight = window.innerHeight;
 
     if (this.innerHeight >= this.innerWidth) {
-      this.deviceType = true;
+      this.deviceType = DESKTOP;
       return
     }
 
-    this.deviceType = false;
+    this.deviceType = MOBILE;
 
   }
 
   changeColorScheme() {
-    this.changeBackgroundColor();
-    this.changeBackgroundImage();
+
+    if (this.colorScheme === DARK) {
+      this.colorScheme = CLEAR;
+    }
+    else {
+      this.colorScheme = DARK;
+    }
+
+    this.changeBackgroundColor(this.colorScheme);
+    this.changeBackgroundImage(this.colorScheme, this.deviceType)
+
   }
 
-  changeBackgroundColor() {
-
-    if (this.todoContainer.backgroundColor !== CLEAR_BACKGROUND_COLOR) {
-      this.todoContainer.backgroundColor = CLEAR_BACKGROUND_COLOR;
+  changeBackgroundColor(colorScheme: boolean) {
+    if (colorScheme === DARK) {
+      // this.todoContainer.backgroundColor = DARK_BACKGROUND_COLOR;
+      this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = DARK_BACKGROUND_COLOR;
+      this.checkbox.backgroundColor = DARK_CHECKBOX_BACKGROUND_COLOR;
       return
     }
-    this.todoContainer.backgroundColor = DARK_BACKGROUND_COLOR;
+    //this.todoContainer.backgroundColor = CLEAR_BACKGROUND_COLOR;
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = CLEAR_BACKGROUND_COLOR;
+    this.checkbox.backgroundColor = CLEAR_CHECKBOX_BACKGROUND_COLOR;
+
   }
 
-  changeBackgroundImage() {
+  changeBackgroundImage(colorScheme: boolean, deviceType: boolean) {
 
-    if (this.todoContainer.backgroundImage !== CLEAR_BACKGROUND_DESKTOP_IMAGE && this.deviceType === DESKTOP) {
+    if (colorScheme === CLEAR && deviceType === DESKTOP) {
       this.todoContainer.backgroundImage = CLEAR_BACKGROUND_DESKTOP_IMAGE;
       return;
     } else {

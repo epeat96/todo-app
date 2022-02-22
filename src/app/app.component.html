@@ -1,11 +1,26 @@
-<div class="todoContainer" [style.background-color]="todoContainer.backgroundColor" [ngStyle]="{ 'background-image': 'url(' + todoContainer.backgroundImage + ')'}">
+<div class="todoContainer" [ngStyle]="{ 'background-image': 'url(' + todoContainer.backgroundImage + ')'}">
 
-    <h1 (click)="changeColorScheme()">TODO</h1>
+    <div class="titleContainer">
+        <h1>TODO</h1>
+        <span *ngIf="this.colorScheme; then Sun else Moon"></span>
+        <ng-template #Moon>
+            <img (click)="changeColorScheme()" src="..\assets\images\icon-moon.svg" alt="moon">
+        </ng-template>
+        <ng-template #Sun>
+            <img (click)="changeColorScheme()" src="..\assets\images\icon-sun.svg" alt="sun">
+        </ng-template>
+    </div>
 
-    <input type="text" (keyup)="keyFunc($event)">
+    <div class="inputContainer">
+        <input type="text" (keyup)="keyFunc($event)">
+    </div>
 
-    <div *ngFor="let element of todoList">
-        <mat-checkbox id="{{element.id}}" color="primary" (change)="setCheck($event)" [checked]="element.checked">{{element.todo}}</mat-checkbox>
+    <div class="listContainer">
+        <div *ngFor="let element of todoList">
+            <mat-checkbox id="{{element.id}}" color="#FFFFFF" (change)="setCheck($event)" [checked]="element.checked" [style.background-color]="checkbox.backgroundColor">
+                {{element.todo}}
+            </mat-checkbox>
+        </div>
     </div>
 
     <p>{{this.countNotChecked()}} items left</p>
@@ -15,5 +30,6 @@
     </div>
 
     <p>This is the resolution: {{this.innerWidth}} x {{this.innerHeight}}</p>
-    <p>The resolution mobile: {{this.deviceType}}</p>
+    <p>It is a desktop resolution: {{this.deviceType}}</p>
+    <p>The colorscheme is: {{this.colorScheme}}</p>
 </div>

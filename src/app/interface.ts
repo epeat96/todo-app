@@ -5,6 +5,9 @@ export interface Todo {
 }
 
 export interface TodoContainer {
-    backgroundColor: string;
     backgroundImage: string;
+}
+
+export interface CheckBox {
+    backgroundColor: string;
 }
