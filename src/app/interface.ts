@@ -10,4 +10,6 @@ export interface TodoContainer {
 
 export interface CheckBox {
     backgroundColor: string;
+    borderColor: string;
+    fontColor: string;
 }

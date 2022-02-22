@@ -17,7 +17,13 @@
 
     <div class="listContainer">
         <div *ngFor="let element of todoList">
-            <mat-checkbox id="{{element.id}}" color="#FFFFFF" (change)="setCheck($event)" [checked]="element.checked" [style.background-color]="checkbox.backgroundColor">
+            <mat-checkbox id="{{element.id}}" color="#FFFFFF" (change)="setCheck($event)" [ngStyle]="{
+                'checked': element.checked,
+                'border-bottom': checkbox.borderColor,
+                'background-color': checkbox.backgroundColor,
+                'border-radius': isItRounded(element.id), 
+                'color': checkbox.fontColor
+            }">
                 {{element.todo}}
             </mat-checkbox>
         </div>

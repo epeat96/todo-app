@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
 import { CheckBox, Todo, TodoContainer } from './interface';
 
 const DARK_BACKGROUND_COLOR: string = '#181824';
@@ -7,6 +7,10 @@ const DARK_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-dark.
 const CLEAR_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-light.jpg';
 const DARK_CHECKBOX_BACKGROUND_COLOR: string = '#25273C';
 const CLEAR_CHECKBOX_BACKGROUND_COLOR: string = '#FFFFFF';
+const DARK_BORDER_COLOR: string = '1px solid #37394E';
+const CLEAR_BORDER_COLOR: string = '1px solid #E7E6EA';
+const DARK_FONT_COLOR: string = '#C8CCE4';
+const CLEAR_FONT_COLOR: string = '#4F4E5E';
 
 const DARK: boolean = true;
 const CLEAR: boolean = false;
@@ -17,7 +21,8 @@ const MOBILE: boolean = false;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements AfterViewInit {
 
@@ -33,7 +38,9 @@ export class AppComponent implements AfterViewInit {
   colorScheme: boolean = DARK;
 
   checkbox: CheckBox = {
-    backgroundColor: DARK_CHECKBOX_BACKGROUND_COLOR
+    backgroundColor: DARK_CHECKBOX_BACKGROUND_COLOR,
+    borderColor: DARK_BORDER_COLOR,
+    fontColor: DARK_FONT_COLOR
   }
 
   todoContainer: TodoContainer = {
@@ -103,8 +110,18 @@ export class AppComponent implements AfterViewInit {
     }
 
     this.changeBackgroundColor(this.colorScheme);
+    this.changeBorderColor(this.colorScheme);
+    this.changeFontColor(this.colorScheme);
     this.changeBackgroundImage(this.colorScheme, this.deviceType)
 
+  }
+
+  changeBorderColor(colorScheme: boolean) {
+    if (colorScheme === DARK) {
+      this.checkbox.borderColor = DARK_BORDER_COLOR;
+      return
+    }
+    this.checkbox.borderColor = CLEAR_BORDER_COLOR;
   }
 
   changeBackgroundColor(colorScheme: boolean) {
@@ -119,6 +136,17 @@ export class AppComponent implements AfterViewInit {
     this.checkbox.backgroundColor = CLEAR_CHECKBOX_BACKGROUND_COLOR;
 
   }
+  
+  changeFontColor(colorScheme:boolean){
+
+    if( colorScheme === DARK){
+      this.checkbox.fontColor = DARK_FONT_COLOR;
+      return
+    }
+
+    this.checkbox.fontColor = CLEAR_FONT_COLOR;
+
+  }
 
   changeBackgroundImage(colorScheme: boolean, deviceType: boolean) {
 
@@ -129,6 +157,14 @@ export class AppComponent implements AfterViewInit {
       this.todoContainer.backgroundImage = DARK_BACKGROUND_DESKTOP_IMAGE;
     }
 
+  }
+
+  isItRounded(itemId : number ){
+
+    if (itemId === 0){
+      return "5px 5px 0 0";
+    }
+    return "";
   }
 
 }

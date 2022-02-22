@@ -29,12 +29,13 @@ h1 {
     display: flexbox;
     margin-right: 20%;
     margin-left: 20%;
-    stroke: #383A4F;
 }
 
-mat-checkbox {
+.mat-checkbox {
+    display: table-cell;
     width: 100%;
-    stroke: #383A4F;
+    padding: 3.30vh;
+    vertical-align: middle;
 }
 
 .attribution {
