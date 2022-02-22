@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Todo } from './todo';
 
 @Component({
@@ -10,6 +10,20 @@ export class AppComponent {
   title = 'todo-app';
 
   todoList: Todo[] = [];
+
+  mobile: Boolean = false;
+
+  public innerWidth: any;
+  public innerHeight: any;
+
+  ngOnInit() {
+    this.innerWidth = window.innerWidth;
+    this.innerHeight = window.innerHeight;
+
+    if (this.innerHeight >= this.innerWidth){
+      this.mobile = true;
+    }
+  }
 
   setCheck(event: any) {
     this.todoList[event.source.id].checked = event.checked;
@@ -34,6 +48,20 @@ export class AppComponent {
 
   isTodoListNotEmpty() {
     return this.todoList.length !== 0;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.innerWidth = window.innerWidth;
+    this.innerHeight = window.innerHeight;
+
+    if (this.innerHeight >= this.innerWidth){
+      this.mobile = true;
+      return
+    }
+
+    this.mobile = false;
+    
   }
 
 }
