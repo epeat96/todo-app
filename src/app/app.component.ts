@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Todo } from './todo';
+import { Todo } from './interface';
 
 @Component({
   selector: 'app-root',
