@@ -1,22 +1,38 @@
 import { AfterViewInit, Component, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
-import { CheckBox, Todo, TodoContainer } from './interface';
+import { CheckBox, Todo, BackgroundContainer, TodoContainer, Title, InputContainer, TitleContainer } from './interface';
+
+// dark colorscheme configuration
 
 const DARK_BACKGROUND_COLOR: string = '#181824';
-const CLEAR_BACKGROUND_COLOR: string = '#FAFAFA';
 const DARK_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-dark.jpg';
-const CLEAR_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-light.jpg';
 const DARK_CHECKBOX_BACKGROUND_COLOR: string = '#25273C';
-const CLEAR_CHECKBOX_BACKGROUND_COLOR: string = '#FFFFFF';
 const DARK_BORDER_COLOR: string = '1px solid #37394E';
-const CLEAR_BORDER_COLOR: string = '1px solid #E7E6EA';
 const DARK_FONT_COLOR: string = '#C8CCE4';
+
+// clear colorscheme configuration
+
+const CLEAR_BACKGROUND_COLOR: string = '#FAFAFA';
+const CLEAR_BACKGROUND_DESKTOP_IMAGE: string = '../assets/images/bg-desktop-light.jpg';
+const CLEAR_CHECKBOX_BACKGROUND_COLOR: string = '#FFFFFF';
+const CLEAR_BORDER_COLOR: string = '1px solid #E7E6EA';
 const CLEAR_FONT_COLOR: string = '#4F4E5E';
 
+// desktop layout configurations
+const DESKTOP_SIDE_MARGIN: string = '31.25vw';
+const DESKTOP_TOP_MARGIN: string = '9.75vh';
+const DESKTOP_CHECKBOX_HEIGHT: string = '7.9vh';
+const DESKTOP_TITLE_LETTER_SPACING: string = '1.46vw';
+const DESKTOP_INPUT_CONTAINER_MARGIN: string = '3vh';
+const DESKTOP_TITLE_BOTTOM_MARGIN: string = '6.25vh';
+
+// mobile layour configurations
+
+
+// control flag values
 const DARK: boolean = true;
 const CLEAR: boolean = false;
 const DESKTOP: boolean = true;
 const MOBILE: boolean = false;
-
 
 @Component({
   selector: 'app-root',
@@ -33,18 +49,36 @@ export class AppComponent implements AfterViewInit {
   }
 
   title = 'todo-app';
-  todoList: Todo[] = [];
+  todoList: Todo[] = [{'id':0,'todo':'Example Task 1', 'checked':false}, {'id':1, 'todo': 'Example Task 2', 'checked':true}];
   deviceType: boolean = DESKTOP;
   colorScheme: boolean = DARK;
 
   checkbox: CheckBox = {
     backgroundColor: DARK_CHECKBOX_BACKGROUND_COLOR,
     borderColor: DARK_BORDER_COLOR,
-    fontColor: DARK_FONT_COLOR
+    fontColor: DARK_FONT_COLOR,
+    height: DESKTOP_CHECKBOX_HEIGHT 
+  }
+
+  todoTitle: Title = {
+    letterSpacing: DESKTOP_TITLE_LETTER_SPACING
+  }
+
+  backgroundContainer: BackgroundContainer = {
+    backgroundImage: DARK_BACKGROUND_DESKTOP_IMAGE
   }
 
   todoContainer: TodoContainer = {
-    backgroundImage: DARK_BACKGROUND_DESKTOP_IMAGE
+    sideMargin: DESKTOP_SIDE_MARGIN,
+    topMargin: DESKTOP_TOP_MARGIN 
+  }
+
+  inputContainer: InputContainer = {
+    margin : DESKTOP_INPUT_CONTAINER_MARGIN
+  }
+
+  titleContainer: TitleContainer = {
+    margin:DESKTOP_TITLE_BOTTOM_MARGIN 
   }
 
   public innerWidth: any;
@@ -59,6 +93,12 @@ export class AppComponent implements AfterViewInit {
       this.deviceType = DESKTOP
     }
 
+    this.setDesktopOrMobile();
+
+  }
+
+  setDesktopOrMobile(){
+    return "TODO"
   }
 
   setCheck(event: any) {
@@ -74,6 +114,7 @@ export class AppComponent implements AfterViewInit {
       let text = event.target.value
       if (text.length > 0) {
         this.todoList.push(this.newTodo(this.todoList.length, event.target.value, false));
+        event.target.value = '';
       }
     }
   }
@@ -97,6 +138,8 @@ export class AppComponent implements AfterViewInit {
     }
 
     this.deviceType = MOBILE;
+
+    this.setDesktopOrMobile();
 
   }
 
@@ -126,12 +169,12 @@ export class AppComponent implements AfterViewInit {
 
   changeBackgroundColor(colorScheme: boolean) {
     if (colorScheme === DARK) {
-      // this.todoContainer.backgroundColor = DARK_BACKGROUND_COLOR;
+      // this.backgroundContainer.backgroundColor = DARK_BACKGROUND_COLOR;
       this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = DARK_BACKGROUND_COLOR;
       this.checkbox.backgroundColor = DARK_CHECKBOX_BACKGROUND_COLOR;
       return
     }
-    //this.todoContainer.backgroundColor = CLEAR_BACKGROUND_COLOR;
+    //this.backgroundContainer.backgroundColor = CLEAR_BACKGROUND_COLOR;
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = CLEAR_BACKGROUND_COLOR;
     this.checkbox.backgroundColor = CLEAR_CHECKBOX_BACKGROUND_COLOR;
 
@@ -151,10 +194,10 @@ export class AppComponent implements AfterViewInit {
   changeBackgroundImage(colorScheme: boolean, deviceType: boolean) {
 
     if (colorScheme === CLEAR && deviceType === DESKTOP) {
-      this.todoContainer.backgroundImage = CLEAR_BACKGROUND_DESKTOP_IMAGE;
+      this.backgroundContainer.backgroundImage = CLEAR_BACKGROUND_DESKTOP_IMAGE;
       return;
     } else {
-      this.todoContainer.backgroundImage = DARK_BACKGROUND_DESKTOP_IMAGE;
+      this.backgroundContainer.backgroundImage = DARK_BACKGROUND_DESKTOP_IMAGE;
     }
 
   }

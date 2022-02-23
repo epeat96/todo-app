@@ -1,41 +1,66 @@
-<div class="todoContainer" [ngStyle]="{ 'background-image': 'url(' + todoContainer.backgroundImage + ')'}">
+<div class="backgroundContainer" [ngStyle]="{ 'background-image': 'url(' + backgroundContainer.backgroundImage + ')'}">
 
-    <div class="titleContainer">
-        <h1>TODO</h1>
-        <span *ngIf="this.colorScheme; then Sun else Moon"></span>
-        <ng-template #Moon>
-            <img (click)="changeColorScheme()" src="..\assets\images\icon-moon.svg" alt="moon">
-        </ng-template>
-        <ng-template #Sun>
-            <img (click)="changeColorScheme()" src="..\assets\images\icon-sun.svg" alt="sun">
-        </ng-template>
-    </div>
+    <div class="todoContainer " [ngStyle]="{
+        'margin-left': todoContainer.sideMargin,
+        'margin-right': todoContainer.sideMargin,
+        'margin-top' : todoContainer.topMargin
+    }">
+        <div class="titleContainer" [ngStyle]="{
+            'margin-bottom': titleContainer.margin
+        }">
 
-    <div class="inputContainer">
-        <input type="text" (keyup)="keyFunc($event)">
-    </div>
+            <h1 class="title" [ngStyle]="{
+                'letter-spacing': todoTitle.letterSpacing
+            }">
+                TODO
 
-    <div class="listContainer">
-        <div *ngFor="let element of todoList">
-            <mat-checkbox id="{{element.id}}" color="#FFFFFF" (change)="setCheck($event)" [ngStyle]="{
-                'checked': element.checked,
+                <div *ngIf="this.colorScheme; then Sun else Moon"></div>
+                <ng-template #Moon>
+                    <img class="icon" (click)="changeColorScheme()" src="..\assets\images\icon-moon.svg" alt="moon">
+                </ng-template>
+                <ng-template #Sun>
+                    <img class="icon" (click)="changeColorScheme()" src="..\assets\images\icon-sun.svg" alt="sun">
+                </ng-template>
+
+            </h1>
+        </div>
+
+        <div class="inputContainer" [ngStyle]="{
+            'background-color': checkbox.backgroundColor,
+            'color': checkbox.fontColor,
+            'height': checkbox.height,
+            'margin-bottom': inputContainer.margin
+        }">
+            <p class="notFocused">Create a new todo...</p>
+            <p class="typing">Currently typing</p>
+            <input type="text" (keyup)="keyFunc($event)" [ngStyle]="{
+                'background-color': checkbox.backgroundColor,
+                'color': checkbox.fontColor
+            }">
+        </div>
+
+        <div class="listContainer">
+            <div *ngFor="let element of todoList">
+                <mat-checkbox id="{{element.id}}" [checked]="element.checked" color="#FFFFFF" (change)="setCheck($event)" [ngStyle]="{
                 'border-bottom': checkbox.borderColor,
                 'background-color': checkbox.backgroundColor,
                 'border-radius': isItRounded(element.id), 
-                'color': checkbox.fontColor
+                'color': checkbox.fontColor,
+                'height': checkbox.height
             }">
-                {{element.todo}}
-            </mat-checkbox>
+                    {{element.todo}}
+                </mat-checkbox>
+            </div>
         </div>
+
+        <p>{{this.countNotChecked()}} items left</p>
+
+        <div class="attribution">
+            Challenge by <a href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW">Frontend Mentor</a>. Coded by <a href="https://github.com/epeat96">Epeat</a>.
+        </div>
+
+        <p>This is the resolution: {{this.innerWidth}} x {{this.innerHeight}}</p>
+        <p>It is a desktop resolution: {{this.deviceType}}</p>
+        <p>The colorscheme is: {{this.colorScheme}}</p>
     </div>
-
-    <p>{{this.countNotChecked()}} items left</p>
-
-    <div class="attribution">
-        Challenge by <a href="https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW">Frontend Mentor</a>. Coded by <a href="https://github.com/epeat96">Epeat</a>.
-    </div>
-
-    <p>This is the resolution: {{this.innerWidth}} x {{this.innerHeight}}</p>
-    <p>It is a desktop resolution: {{this.deviceType}}</p>
-    <p>The colorscheme is: {{this.colorScheme}}</p>
 </div>
