@@ -49,7 +49,7 @@
                 <mat-checkbox id="{{element.id}}" [checked]="element.checked" color="#FFFFFF" (change)="setCheck($event)" [ngStyle]="{
                 'border-bottom': checkbox.borderColor,
                 'background-color': checkbox.backgroundColor,
-                'border-radius': isItRounded(element.id), 
+                'border-radius': roundTheFirstCheckbox(element.id), 
                 'color': checkbox.fontColor,
                 'height': checkbox.height
             }">

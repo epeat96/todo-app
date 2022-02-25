@@ -207,7 +207,7 @@ export class AppComponent implements AfterViewInit {
 
   }
 
-  isItRounded(itemId : number ){
+  isItTheFirstCheckbox(itemId : number ){
 
     if (itemId === 0){
       return "5px 5px 0 0";
