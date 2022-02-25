@@ -25,7 +25,7 @@ const DESKTOP_TITLE_LETTER_SPACING: string = '1.46vw';
 const DESKTOP_INPUT_CONTAINER_MARGIN: string = '3vh';
 const DESKTOP_TITLE_BOTTOM_MARGIN: string = '6.25vh';
 
-// mobile layour configurations
+// mobile layout configurations
 
 
 // control flag values
@@ -33,6 +33,8 @@ const DARK: boolean = true;
 const CLEAR: boolean = false;
 const DESKTOP: boolean = true;
 const MOBILE: boolean = false;
+const TYPING: boolean = true;
+const NOT_TYPING: boolean = false;
 
 @Component({
   selector: 'app-root',
@@ -74,7 +76,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   inputContainer: InputContainer = {
-    margin : DESKTOP_INPUT_CONTAINER_MARGIN
+    margin : DESKTOP_INPUT_CONTAINER_MARGIN,
+    typing : NOT_TYPING
   }
 
   titleContainer: TitleContainer = {
@@ -115,6 +118,8 @@ export class AppComponent implements AfterViewInit {
       if (text.length > 0) {
         this.todoList.push(this.newTodo(this.todoList.length, event.target.value, false));
         event.target.value = '';
+        event.target.blur();
+        this.setNotTyping();
       }
     }
   }
@@ -208,6 +213,14 @@ export class AppComponent implements AfterViewInit {
       return "5px 5px 0 0";
     }
     return "";
+  }
+
+  setTyping(){
+    this.inputContainer.typing = TYPING;
+  }
+
+  setNotTyping(){
+    this.inputContainer.typing = NOT_TYPING;
   }
 
 }

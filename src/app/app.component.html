@@ -31,9 +31,14 @@
             'height': checkbox.height,
             'margin-bottom': inputContainer.margin
         }">
-            <p class="notFocused">Create a new todo...</p>
-            <p class="typing">Currently typing</p>
-            <input type="text" (keyup)="keyFunc($event)" [ngStyle]="{
+            <div *ngIf="this.inputContainer.typing then Focused else NotFocused"></div>
+            <ng-template #NotFocused>
+                <p class="notFocused">Create a new todo...</p>
+            </ng-template>
+            <ng-template #Focused>
+                <p class="typing">Currently typing</p>
+            </ng-template>
+            <input type="text" (keyup)="keyFunc($event)" (focus)="setTyping()" [ngStyle]="{
                 'background-color': checkbox.backgroundColor,
                 'color': checkbox.fontColor
             }">

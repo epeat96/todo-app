@@ -17,6 +17,7 @@ export interface TodoContainer{
 
 export interface InputContainer {
     margin: string;
+    typing: boolean;
 }
 
 export interface TitleContainer {
