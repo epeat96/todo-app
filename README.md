@@ -1,7 +1,5 @@
 # Todo App
 
-> **Note:** This repository is archived and no longer maintained.
-
 This project is an Angular solution to the [Todo App challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW). I built it when I first started learning Angular, after finishing a few smaller vanilla JavaScript projects.
 
 The application lets you create, complete, filter and remove todo items and persists them in the browser. It was a fun way to explore components, two-way data binding and the Angular CLI.
